@@ -352,6 +352,21 @@ body{background:linear-gradient(180deg,#f6f8fb 0%,#eef3f8 100%)!important}
 .pbi-legend-chip{display:inline-flex;align-items:center;gap:8px;margin-right:14px;font-size:12px;color:var(--muted)}
 .pbi-legend-chip i{width:10px;height:10px;border-radius:999px;display:inline-block}
 
+/* ---------- Reembolsos Customer Service (pie chart + tarjetas) ---------- */
+.pbi-pie-wrap{display:flex;justify-content:center;padding:14px 18px 4px}
+.pbi-pie-wrap svg{width:100%;max-width:230px;height:auto}
+.pbi-pie-slice{cursor:pointer;transition:filter .15s ease, transform .15s ease;transform-origin:110px 110px}
+.pbi-pie-slice:hover,.pbi-pie-slice.is-active{filter:brightness(.92) saturate(1.12);transform:scale(1.035)}
+.pbi-pie-pct{font:800 13px "JetBrains Mono",monospace;pointer-events:none}
+.pbi-refund-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;padding:8px 18px 18px}
+.pbi-refund-card{display:flex;align-items:center;gap:10px;padding:11px 13px;border:1.5px solid var(--line);border-radius:10px;background:#fff;cursor:pointer;transition:.15s;text-align:left;font:inherit}
+.pbi-refund-card:hover{border-color:var(--faint)}
+.pbi-refund-card.is-active{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink) inset}
+.pbi-refund-sq{width:14px;height:14px;border-radius:4px;flex:0 0 auto}
+.pbi-refund-info{display:flex;flex-direction:column;gap:1px;min-width:0}
+.pbi-refund-label{font-size:11.5px;color:var(--muted);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pbi-refund-count{font:700 18px "Space Grotesk",sans-serif}
+
 /* ---------- Responsive ---------- */
 @media (max-width:760px){
   .pbi-bar-row{grid-template-columns:minmax(90px,1fr) minmax(80px,1.4fr) 58px;gap:8px}
@@ -554,13 +569,14 @@ body{background:linear-gradient(180deg,#f6f8fb 0%,#eef3f8 100%)!important}
       </div>
       <div style="height:16px"></div>
       <div class="card">
-        <div class="ch-head"><h4>Reembolsos por tipo (SERVICE)</h4><span class="tag" id="dashServiceTag"></span></div>
+        <div class="ch-head"><h4>Reembolsos Customer Service</h4><span class="tag" id="dashServiceTag"></span></div>
         <div class="dash-toolbar" style="padding:0 18px 8px;margin:0">
           <select class="selmonth" id="serviceYear" aria-label="Filtrar SERVICE por año"><option value="all">Todos los años</option></select>
           <select class="selmonth" id="serviceMonth" aria-label="Filtrar SERVICE por mes"><option value="all">Todos los meses</option></select>
           <span class="hint">Filtros independientes para SERVICE</span>
         </div>
-        <div class="bars" id="dashService"></div>
+        <div id="dashServicePie" class="pbi-pie-wrap"></div>
+        <div id="dashServiceCards" class="pbi-refund-cards"></div>
       </div>
       <div class="hbar-hint">Clic en cualquier barra de Etapa, Estatus HCL o Tipo SERVICE para ver el detalle de esas órdenes.</div>
       <div class="dash-foot" id="dashCorreoStat"></div>
@@ -1306,6 +1322,80 @@ function renderHBarChart(id, entries, opts){
   });
 }
 
+/* Reembolsos Customer Service — colores fijos por tipo (verde=Nueva Orden,
+   amarillo=Reembolso parcial, rojo=Reembolso total), usando las mismas
+   variables de color que el resto del dashboard (--ok/--pbi-gold/--bad). */
+const SERVICE_TIPO_COLORS = {
+  "nuevaorden": "var(--ok)",
+  "reembolsoparcial": "var(--pbi-gold)",
+  "reembolsototal": "var(--bad)",
+};
+const SERVICE_TIPO_TEXT = {
+  "nuevaorden": "#fff",
+  "reembolsoparcial": "#3b2500",
+  "reembolsototal": "#fff",
+};
+function serviceTipoColor(label){ return SERVICE_TIPO_COLORS[norm(label)] || "var(--muted)"; }
+function serviceTipoTextColor(label){ return SERVICE_TIPO_TEXT[norm(label)] || "#fff"; }
+
+/* Gráfica de pastel SVG con porcentaje flotante dentro de cada rebanada.
+   entries = [[label, count], ...] ya ordenados de mayor a menor. */
+function renderServicePie(id, entries, active){
+  const el=document.getElementById(id);
+  if(!entries.length || entries.every(e=>e[1]===0)){ el.innerHTML=`<div class="pbi-empty">Sin datos</div>`; return; }
+  const total=entries.reduce((s,e)=>s+e[1],0)||1;
+  const cx=110, cy=110, r=98;
+  const toXY=(deg)=>{ const rad=(deg*Math.PI)/180; return [cx+r*Math.cos(rad), cy+r*Math.sin(rad)]; };
+  let angle=-90;
+  const slices=entries.filter(([,val])=>val>0).map(([label,val])=>{
+    const frac=val/total;
+    const startAngle=angle;
+    const sweep=frac*360;
+    angle+=sweep;
+    const endAngle=angle;
+    const large = sweep>180?1:0;
+    const [x1,y1]=toXY(startAngle);
+    const [x2,y2]=toXY(endAngle);
+    const midRad=((startAngle+endAngle)/2*Math.PI)/180;
+    const labelR=r*0.62;
+    const lx=cx+labelR*Math.cos(midRad), ly=cy+labelR*Math.sin(midRad);
+    const pct=Math.round(frac*100);
+    const path = frac>=0.999
+      ? `M ${cx-r},${cy} A ${r},${r} 0 1,1 ${cx+r},${cy} A ${r},${r} 0 1,1 ${cx-r},${cy} Z`
+      : `M ${cx},${cy} L ${x1.toFixed(2)},${y1.toFixed(2)} A ${r},${r} 0 ${large},1 ${x2.toFixed(2)},${y2.toFixed(2)} Z`;
+    return {label, val, pct, color:serviceTipoColor(label), textColor:serviceTipoTextColor(label), path, lx, ly};
+  });
+  const slicesHtml = slices.map(s=>`
+    <path class="pbi-pie-slice ${active===s.label?'is-active':''}" d="${s.path}" fill="${s.color}" data-value="${esc(s.label)}">
+      <title>${esc(s.label)}: ${fmt(s.val)} (${s.pct}%)</title>
+    </path>`).join('');
+  const labelsHtml = slices.filter(s=>s.pct>=3).map(s=>`
+    <text class="pbi-pie-pct" x="${s.lx.toFixed(1)}" y="${s.ly.toFixed(1)}" text-anchor="middle" dominant-baseline="central" fill="${s.textColor}">${s.pct}%</text>`).join('');
+  el.innerHTML = `<svg viewBox="0 0 220 220" role="img" aria-label="Reembolsos Customer Service por tipo">${slicesHtml}${labelsHtml}</svg>`;
+  el.querySelectorAll(".pbi-pie-slice").forEach(p=>{
+    p.addEventListener("click", ()=>selectDashCategory("service", p.dataset.value));
+  });
+}
+
+/* Tarjetas debajo del pastel: cuadrito de color + conteo individual por tipo. */
+function renderServiceCards(id, entries, active){
+  const el=document.getElementById(id);
+  if(!entries.length){ el.innerHTML=""; return; }
+  el.innerHTML = entries.map(([label,val])=>{
+    const isActive = active===label;
+    return `<button type="button" class="pbi-refund-card ${isActive?'is-active':''}" data-value="${esc(label)}">
+      <span class="pbi-refund-sq" style="background:${serviceTipoColor(label)}"></span>
+      <span class="pbi-refund-info">
+        <span class="pbi-refund-label">${esc(label)}</span>
+        <span class="pbi-refund-count">${fmt(val)}</span>
+      </span>
+    </button>`;
+  }).join("");
+  el.querySelectorAll(".pbi-refund-card").forEach(b=>{
+    b.addEventListener("click", ()=>selectDashCategory("service", b.dataset.value));
+  });
+}
+
 function selectDashCategory(source, value){
   if(DASH_CATEGORY && DASH_CATEGORY.source===source && DASH_CATEGORY.value===value){
     DASH_CATEGORY = null;
@@ -1605,7 +1695,8 @@ function renderDashboardGeneral(monthFilter){
   const tipoCounts=new Map();
   servicef.forEach(r=>{ const k=r.tipo||"Sin tipo"; tipoCounts.set(k,(tipoCounts.get(k)||0)+1); });
   const tipoEntries=[...tipoCounts.entries()].sort((a,b)=>b[1]-a[1]);
-  renderHBarChart("dashService", tipoEntries, {fmtVal:fmt, color:"var(--bad)", showPct:true, source:"service", active:activeService});
+  renderServicePie("dashServicePie", tipoEntries, activeService);
+  renderServiceCards("dashServiceCards", tipoEntries, activeService);
   document.getElementById("dashServiceTag").textContent = `${fmtMXN(montoRefund)}`;
 
   const conCorreo = STATE.basedm.filter(r=>r.correo).length;
