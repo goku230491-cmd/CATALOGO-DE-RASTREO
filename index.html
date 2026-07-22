@@ -352,20 +352,48 @@ body{background:linear-gradient(180deg,#f6f8fb 0%,#eef3f8 100%)!important}
 .pbi-legend-chip{display:inline-flex;align-items:center;gap:8px;margin-right:14px;font-size:12px;color:var(--muted)}
 .pbi-legend-chip i{width:10px;height:10px;border-radius:999px;display:inline-block}
 
-/* ---------- Reembolsos Customer Service (pie chart + tarjetas) ---------- */
-.pbi-pie-wrap{display:flex;justify-content:center;padding:14px 18px 4px}
-.pbi-pie-wrap svg{width:100%;max-width:230px;height:auto}
-.pbi-pie-slice{cursor:pointer;transition:filter .15s ease, transform .15s ease;transform-origin:110px 110px}
-.pbi-pie-slice:hover,.pbi-pie-slice.is-active{filter:brightness(.92) saturate(1.12);transform:scale(1.035)}
-.pbi-pie-pct{font:800 13px "JetBrains Mono",monospace;pointer-events:none}
-.pbi-refund-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;padding:8px 18px 18px}
-.pbi-refund-card{display:flex;align-items:center;gap:10px;padding:11px 13px;border:1.5px solid var(--line);border-radius:10px;background:#fff;cursor:pointer;transition:.15s;text-align:left;font:inherit}
-.pbi-refund-card:hover{border-color:var(--faint)}
+/* ---------- Incidencia posventa sobre órdenes enviadas ---------- */
+.refund-intel{overflow:hidden;border-color:#d8d8d8;background:linear-gradient(145deg,#fff 0%,#fff 62%,#f7f7f7 100%)}
+.refund-hero{padding:20px 22px 16px;border-bottom:1px solid var(--line);background:linear-gradient(105deg,#111 0%,#202020 68%,#b5121b 100%);color:#fff}
+.refund-eyebrow{font-size:10.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#ffb8bd;margin-bottom:5px}
+.refund-title-row{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.refund-title-row h4{font-size:20px;margin:0;color:#fff}
+.refund-title-row .tag{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.25);color:#fff}
+.refund-subtitle{max-width:820px;margin:6px 0 0;font-size:12.5px;line-height:1.5;color:#d7d7d7}
+.refund-toolbar{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:14px 22px 4px}
+.refund-toolbar .hint{margin-left:auto;max-width:430px;text-align:right;line-height:1.35}
+.refund-kpis{display:grid;grid-template-columns:repeat(4,minmax(150px,1fr));gap:10px;padding:12px 22px}
+.refund-kpi{position:relative;min-height:88px;padding:14px 15px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:0 7px 20px rgba(17,17,17,.045)}
+.refund-kpi:before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:4px;border-radius:0 5px 5px 0;background:var(--k,#111)}
+.refund-kpi-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.035em}
+.refund-kpi-value{font:800 25px "Space Grotesk",sans-serif;color:var(--ink);margin-top:3px}
+.refund-kpi-note{font-size:10.5px;color:var(--faint);margin-top:2px;line-height:1.35}
+.refund-layout{display:grid;grid-template-columns:minmax(360px,1.15fr) minmax(330px,.85fr);gap:14px;padding:4px 22px 16px}
+.refund-chart,.refund-breakdown{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px}
+.refund-panel-title{font-size:13px;font-weight:800;color:var(--ink);margin-bottom:3px}
+.refund-panel-sub{font-size:11px;color:var(--muted);margin-bottom:16px}
+.refund-rate-list{display:flex;flex-direction:column;gap:16px}
+.refund-rate-row{width:100%;border:0;background:transparent;padding:0;text-align:left;font:inherit;cursor:pointer}
+.refund-rate-top{display:grid;grid-template-columns:minmax(130px,1fr) auto;align-items:baseline;gap:12px;margin-bottom:6px}
+.refund-rate-name{font-size:12px;font-weight:700;color:var(--ink)}
+.refund-rate-value{font:800 13px "JetBrains Mono",monospace;color:var(--ink);white-space:nowrap}
+.refund-rate-track{display:block;height:15px;border-radius:999px;background:#ececec;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(17,17,17,.04)}
+.refund-rate-fill{display:block;height:100%;width:var(--w);min-width:3px;border-radius:999px;background:var(--c);transform-origin:left;animation:pbiGrow .65s cubic-bezier(.22,1,.36,1) both}
+.refund-rate-foot{display:flex;justify-content:space-between;gap:8px;margin-top:5px;font-size:10.5px;color:var(--faint)}
+.refund-rate-row:hover .refund-rate-fill,.refund-rate-row.is-active .refund-rate-fill{filter:brightness(.86) saturate(1.18)}
+.refund-rate-row.is-active .refund-rate-name{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
+.pbi-refund-cards{display:grid;grid-template-columns:1fr;gap:9px}
+.pbi-refund-card{display:grid;grid-template-columns:5px minmax(120px,1fr) auto;gap:11px;align-items:center;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;background:#fff;cursor:pointer;transition:.15s;text-align:left;font:inherit}
+.pbi-refund-card:hover{border-color:#9a9a9a;transform:translateY(-1px)}
 .pbi-refund-card.is-active{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink) inset}
-.pbi-refund-sq{width:14px;height:14px;border-radius:4px;flex:0 0 auto}
-.pbi-refund-info{display:flex;flex-direction:column;gap:1px;min-width:0}
-.pbi-refund-label{font-size:11.5px;color:var(--muted);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pbi-refund-count{font:700 18px "Space Grotesk",sans-serif}
+.pbi-refund-sq{width:5px;height:38px;border-radius:999px}
+.pbi-refund-info{display:flex;flex-direction:column;gap:2px;min-width:0}
+.pbi-refund-label{font-size:11.5px;color:var(--muted);font-weight:700}
+.pbi-refund-count{font:800 19px "Space Grotesk",sans-serif}
+.pbi-refund-meta{text-align:right;font-size:10.5px;color:var(--faint);line-height:1.5;white-space:nowrap}
+.pbi-refund-meta strong{display:block;font:800 12px "JetBrains Mono",monospace;color:var(--ink)}
+.refund-method{display:flex;gap:8px;align-items:flex-start;margin:0 22px 18px;padding:10px 12px;border-radius:9px;background:#f2f2f2;color:#575757;font-size:10.5px;line-height:1.45}
+.refund-method:before{content:"i";display:grid;place-items:center;width:17px;height:17px;flex:0 0 17px;border-radius:50%;background:#111;color:#fff;font-weight:800;font-size:10px}
 
 /* ---------- Responsive ---------- */
 @media (max-width:760px){
@@ -376,6 +404,11 @@ body{background:linear-gradient(180deg,#f6f8fb 0%,#eef3f8 100%)!important}
   .pbi-tip{left:8px}
   .pbi-carrier-metrics{height:100px}
   .pbi-courier-seg{padding:0 6px;font-size:10px}
+  .refund-kpis{grid-template-columns:repeat(2,minmax(130px,1fr));padding-inline:14px}
+  .refund-layout{grid-template-columns:1fr;padding-inline:14px}
+  .refund-toolbar{padding-inline:14px}
+  .refund-toolbar .hint{margin-left:0;text-align:left}
+  .refund-method{margin-inline:14px}
 }
 </style>
 
@@ -568,17 +601,43 @@ body{background:linear-gradient(180deg,#f6f8fb 0%,#eef3f8 100%)!important}
         </div>
       </div>
       <div style="height:16px"></div>
-      <div class="card">
-        <div class="ch-head"><h4>Reembolsos Customer Service</h4><span class="tag" id="dashServiceTag"></span></div>
-        <div class="dash-toolbar" style="padding:0 18px 8px;margin:0">
-          <select class="selmonth" id="serviceYear" aria-label="Filtrar SERVICE por año"><option value="all">Todos los años</option></select>
-          <select class="selmonth" id="serviceMonth" aria-label="Filtrar SERVICE por mes"><option value="all">Todos los meses</option></select>
-          <span class="hint">Filtros independientes para SERVICE</span>
+      <div class="card refund-intel">
+        <div class="refund-hero">
+          <div class="refund-eyebrow">Customer Service · Control posventa</div>
+          <div class="refund-title-row">
+            <div>
+              <h4>Incidencia posventa sobre órdenes enviadas</h4>
+              <p class="refund-subtitle">Mide qué proporción de las órdenes con guía en Master terminó en reembolso total, parcial o nueva orden. El cálculo usa órdenes únicas y cruza SERVICE por orden original.</p>
+            </div>
+            <span class="tag" id="dashServiceTag"></span>
+          </div>
         </div>
-        <div id="dashServicePie" class="pbi-pie-wrap"></div>
-        <div id="dashServiceCards" class="pbi-refund-cards"></div>
+        <div class="refund-toolbar">
+          <select class="selmonth" id="serviceYear" aria-label="Filtrar por año de envío"><option value="all">Todos los años</option></select>
+          <select class="selmonth" id="serviceMonth" aria-label="Filtrar por mes de envío"><option value="all">Todos los meses</option></select>
+          <select class="selmonth" id="serviceCarrier" aria-label="Filtrar por paquetería">
+            <option value="all">Todas las paqueterías</option>
+            <option value="DHL">DHL</option>
+            <option value="FEDEX">FedEx</option>
+          </select>
+          <span class="hint">Filtros por cohorte: fecha y paquetería del envío en Master Guías.</span>
+        </div>
+        <div id="dashServiceKpis" class="refund-kpis"></div>
+        <div class="refund-layout">
+          <div class="refund-chart">
+            <div class="refund-panel-title">Resoluciones por cada 1,000 órdenes enviadas</div>
+            <div class="refund-panel-sub">La escala compara los tres tipos; la etiqueta muestra la tasa exacta contra el total enviado.</div>
+            <div id="dashServiceRateChart" class="refund-rate-list"></div>
+          </div>
+          <div class="refund-breakdown">
+            <div class="refund-panel-title">Composición de casos SERVICE</div>
+            <div class="refund-panel-sub">Cada orden se clasifica por su movimiento SERVICE más reciente; el monto conserva todos los movimientos del tipo.</div>
+            <div id="dashServiceCards" class="pbi-refund-cards"></div>
+          </div>
+        </div>
+        <div id="dashServiceMethod" class="refund-method"></div>
       </div>
-      <div class="hbar-hint">Clic en cualquier barra de Etapa, Estatus HCL o Tipo SERVICE para ver el detalle de esas órdenes.</div>
+      <div class="hbar-hint">Clic en cualquier barra de Etapa, Estatus HCL o resolución SERVICE para ver el detalle de esas órdenes.</div>
       <div class="dash-foot" id="dashCorreoStat"></div>
 
       <div style="height:16px"></div>
@@ -984,7 +1043,8 @@ function ingestSERVICE(rows){
       ordenOriginal:clean(cellStr(row[5])),
       motivo:clean(cellStr(row[6])),
       comentarios:clean(cellStr(row[7])),
-      pkey:pedidoKey(orden)
+      pkey:pedidoKey(orden),
+      casePkey:pedidoKey(clean(cellStr(row[5])) || orden)
     });
   }
   return out;
@@ -1322,73 +1382,58 @@ function renderHBarChart(id, entries, opts){
   });
 }
 
-/* Reembolsos Customer Service — colores fijos por tipo (verde=Nueva Orden,
-   amarillo=Reembolso parcial, rojo=Reembolso total), usando las mismas
-   variables de color que el resto del dashboard (--ok/--pbi-gold/--bad). */
+/* Incidencia posventa — colores fijos por resolución. */
 const SERVICE_TIPO_COLORS = {
   "nuevaorden": "var(--ok)",
   "reembolsoparcial": "var(--pbi-gold)",
   "reembolsototal": "var(--bad)",
 };
-const SERVICE_TIPO_TEXT = {
-  "nuevaorden": "#fff",
-  "reembolsoparcial": "#3b2500",
-  "reembolsototal": "#fff",
-};
 function serviceTipoColor(label){ return SERVICE_TIPO_COLORS[norm(label)] || "var(--muted)"; }
-function serviceTipoTextColor(label){ return SERVICE_TIPO_TEXT[norm(label)] || "#fff"; }
+const SERVICE_TIPO_ORDER=["Reembolso total","Reembolso parcial","Nueva Orden"];
+function pctExact(n,d){ return d ? (n/d*100) : 0; }
+function fmtPctExact(n){ return n.toLocaleString("es-MX",{minimumFractionDigits:2,maximumFractionDigits:2})+"%"; }
 
-/* Gráfica de pastel SVG con porcentaje flotante dentro de cada rebanada.
-   entries = [[label, count], ...] ya ordenados de mayor a menor. */
-function renderServicePie(id, entries, active){
+function renderServiceRateChart(id, entries, sentOrders, active){
   const el=document.getElementById(id);
-  if(!entries.length || entries.every(e=>e[1]===0)){ el.innerHTML=`<div class="pbi-empty">Sin datos</div>`; return; }
-  const total=entries.reduce((s,e)=>s+e[1],0)||1;
-  const cx=110, cy=110, r=98;
-  const toXY=(deg)=>{ const rad=(deg*Math.PI)/180; return [cx+r*Math.cos(rad), cy+r*Math.sin(rad)]; };
-  let angle=-90;
-  const slices=entries.filter(([,val])=>val>0).map(([label,val])=>{
-    const frac=val/total;
-    const startAngle=angle;
-    const sweep=frac*360;
-    angle+=sweep;
-    const endAngle=angle;
-    const large = sweep>180?1:0;
-    const [x1,y1]=toXY(startAngle);
-    const [x2,y2]=toXY(endAngle);
-    const midRad=((startAngle+endAngle)/2*Math.PI)/180;
-    const labelR=r*0.62;
-    const lx=cx+labelR*Math.cos(midRad), ly=cy+labelR*Math.sin(midRad);
-    const pct=Math.round(frac*100);
-    const path = frac>=0.999
-      ? `M ${cx-r},${cy} A ${r},${r} 0 1,1 ${cx+r},${cy} A ${r},${r} 0 1,1 ${cx-r},${cy} Z`
-      : `M ${cx},${cy} L ${x1.toFixed(2)},${y1.toFixed(2)} A ${r},${r} 0 ${large},1 ${x2.toFixed(2)},${y2.toFixed(2)} Z`;
-    return {label, val, pct, color:serviceTipoColor(label), textColor:serviceTipoTextColor(label), path, lx, ly};
-  });
-  const slicesHtml = slices.map(s=>`
-    <path class="pbi-pie-slice ${active===s.label?'is-active':''}" d="${s.path}" fill="${s.color}" data-value="${esc(s.label)}">
-      <title>${esc(s.label)}: ${fmt(s.val)} (${s.pct}%)</title>
-    </path>`).join('');
-  const labelsHtml = slices.filter(s=>s.pct>=3).map(s=>`
-    <text class="pbi-pie-pct" x="${s.lx.toFixed(1)}" y="${s.ly.toFixed(1)}" text-anchor="middle" dominant-baseline="central" fill="${s.textColor}">${s.pct}%</text>`).join('');
-  el.innerHTML = `<svg viewBox="0 0 220 220" role="img" aria-label="Reembolsos Customer Service por tipo">${slicesHtml}${labelsHtml}</svg>`;
-  el.querySelectorAll(".pbi-pie-slice").forEach(p=>{
-    p.addEventListener("click", ()=>selectDashCategory("service", p.dataset.value));
-  });
+  if(!sentOrders){ el.innerHTML=`<div class="pbi-empty">Sin órdenes enviadas para esta cohorte</div>`; return; }
+  const maxRate=Math.max(.0001,...entries.map(e=>pctExact(e.count,sentOrders)));
+  el.innerHTML=entries.map((e,idx)=>{
+    const rate=pctExact(e.count,sentOrders), perThousand=sentOrders ? e.count/sentOrders*1000 : 0;
+    const w=e.count ? Math.max(3,rate/maxRate*100) : 0;
+    return `<button type="button" class="refund-rate-row ${active===e.label?'is-active':''}" data-value="${esc(e.label)}" style="animation-delay:${idx*55}ms">
+      <span class="refund-rate-top"><span class="refund-rate-name">${esc(e.label)}</span><span class="refund-rate-value">${fmtPctExact(rate)}</span></span>
+      <span class="refund-rate-track"><span class="refund-rate-fill" style="--w:${w.toFixed(2)}%;--c:${serviceTipoColor(e.label)}"></span></span>
+      <span class="refund-rate-foot"><span>${fmt(e.count)} órdenes</span><span>${perThousand.toLocaleString("es-MX",{maximumFractionDigits:1})} por cada 1,000</span></span>
+    </button>`;
+  }).join("");
+  el.querySelectorAll(".refund-rate-row").forEach(b=>b.addEventListener("click",()=>selectDashCategory("service",b.dataset.value)));
 }
 
-/* Tarjetas debajo del pastel: cuadrito de color + conteo individual por tipo. */
-function renderServiceCards(id, entries, active){
+function renderServiceKpis(id, metrics){
+  const el=document.getElementById(id);
+  const rate=pctExact(metrics.affectedOrders,metrics.sentOrders);
+  const cards=[
+    {label:"Órdenes enviadas",value:fmt(metrics.sentOrders),note:"Denominador · órdenes únicas con guía",color:"#111"},
+    {label:"Con gestión SERVICE",value:fmt(metrics.affectedOrders),note:"Órdenes originales únicas vinculadas",color:"#b5121b"},
+    {label:"Tasa posventa",value:fmtPctExact(rate),note:`${(rate*10).toLocaleString("es-MX",{maximumFractionDigits:1})} casos por cada 1,000`,color:"#e31b23"},
+    {label:"Monto registrado",value:fmtMXN(metrics.amount),note:"Suma de movimientos SERVICE vinculados",color:"#555"}
+  ];
+  el.innerHTML=cards.map(c=>`<div class="refund-kpi" style="--k:${c.color}"><div class="refund-kpi-label">${c.label}</div><div class="refund-kpi-value">${c.value}</div><div class="refund-kpi-note">${c.note}</div></div>`).join("");
+}
+
+function renderServiceCards(id, entries, sentOrders, affectedOrders, active){
   const el=document.getElementById(id);
   if(!entries.length){ el.innerHTML=""; return; }
-  el.innerHTML = entries.map(([label,val])=>{
-    const isActive = active===label;
-    return `<button type="button" class="pbi-refund-card ${isActive?'is-active':''}" data-value="${esc(label)}">
-      <span class="pbi-refund-sq" style="background:${serviceTipoColor(label)}"></span>
+  el.innerHTML = entries.map(e=>{
+    const isActive = active===e.label;
+    const mix=affectedOrders ? e.count/affectedOrders*100 : 0;
+    return `<button type="button" class="pbi-refund-card ${isActive?'is-active':''}" data-value="${esc(e.label)}">
+      <span class="pbi-refund-sq" style="background:${serviceTipoColor(e.label)}"></span>
       <span class="pbi-refund-info">
-        <span class="pbi-refund-label">${esc(label)}</span>
-        <span class="pbi-refund-count">${fmt(val)}</span>
+        <span class="pbi-refund-label">${esc(e.label)}</span>
+        <span class="pbi-refund-count">${fmt(e.count)}</span>
       </span>
+      <span class="pbi-refund-meta"><strong>${fmtPctExact(pctExact(e.count,sentOrders))}</strong>${mix.toLocaleString("es-MX",{maximumFractionDigits:1})}% de casos · ${fmtMXN(e.amount)}</span>
     </button>`;
   }).join("");
   el.querySelectorAll(".pbi-refund-card").forEach(b=>{
@@ -1408,27 +1453,76 @@ function selectDashCategory(source, value){
 
 /* Métricas de un mes dado (o "all") — se reutiliza para el mes actual y
    para el mes anterior, así los KPIs pueden mostrar variación. */
-// Filtros exclusivos de SERVICE: no modifican los selectores generales del dashboard.
-let SERVICE_YEAR="all", SERVICE_MONTH="all";
+// Cohorte independiente para incidencia posventa: fecha y paquetería del envío en Master Guías.
+let SERVICE_YEAR="all", SERVICE_MONTH="all", SERVICE_CARRIER="all";
 function serviceDateParts(dstr){
   const k=monthKey(dstr); if(!k) return {year:"",month:""};
   const a=k.split("-"); return {year:a[0],month:a[1]};
 }
-function getServiceFiltered(){
-  return STATE.service.filter(r=>{
-    const d=serviceDateParts(r.fecha);
-    return (SERVICE_YEAR==="all" || d.year===SERVICE_YEAR) &&
-           (SERVICE_MONTH==="all" || d.month===SERVICE_MONTH);
+
+function buildMasterOrderCohorts(){
+  const map=new Map();
+  STATE.all.forEach(r=>{
+    if(!r.pkey || !r.gkey) return;
+    let e=map.get(r.pkey);
+    if(!e){ e={pkey:r.pkey,dateKey:null,carriers:new Set(),rows:0}; map.set(r.pkey,e); }
+    e.rows++;
+    const mk=monthKey(dateOfRec(r));
+    if(mk && mk<=currentMonthKey() && (!e.dateKey || mk<e.dateKey)) e.dateKey=mk;
+    const raw=r.src==="fx" ? "FEDEX" : clean(r.mensajeria||"").toUpperCase();
+    if(raw.includes("DHL")) e.carriers.add("DHL");
+    else if(raw.includes("FEDEX")) e.carriers.add("FEDEX");
+    else if(raw) e.carriers.add(raw);
   });
+  return map;
+}
+
+function getServiceCohortMetrics(){
+  const master=buildMasterOrderCohorts();
+  const cohort=[];
+  master.forEach(e=>{
+    const d=serviceDateParts(e.dateKey);
+    if(SERVICE_YEAR!=="all" && d.year!==SERVICE_YEAR) return;
+    if(SERVICE_MONTH!=="all" && d.month!==SERVICE_MONTH) return;
+    if(SERVICE_CARRIER!=="all" && !e.carriers.has(SERVICE_CARRIER)) return;
+    // Sin fecha entra únicamente en el histórico completo; no se fuerza a un periodo.
+    if((SERVICE_YEAR!=="all" || SERVICE_MONTH!=="all") && !e.dateKey) return;
+    cohort.push(e);
+  });
+  const cohortKeys=new Set(cohort.map(e=>e.pkey));
+  const serviceRows=STATE.service.filter(r=>r.casePkey && cohortKeys.has(r.casePkey));
+  const typeData=SERVICE_TIPO_ORDER.map(label=>({label,count:0,amount:0,cases:new Set()}));
+  const typeByNorm=new Map(typeData.map(e=>[norm(e.label),e]));
+  const latestByCase=new Map();
+  serviceRows.forEach(r=>{
+    const e=typeByNorm.get(norm(r.tipo||"")); if(!e) return;
+    e.amount+=(r.monto||0);
+    const prev=latestByCase.get(r.casePkey);
+    if(!prev || (r.fecha||"")>=(prev.fecha||"")) latestByCase.set(r.casePkey,r);
+  });
+  latestByCase.forEach(r=>{ const e=typeByNorm.get(norm(r.tipo||"")); if(e) e.cases.add(r.casePkey); });
+  typeData.forEach(e=>{e.count=e.cases.size; delete e.cases;});
+  const finalRows=[...latestByCase.values()];
+  const amount=serviceRows.reduce((s,r)=>s+(r.monto||0),0);
+
+  const allCases=new Set(STATE.service.map(r=>r.casePkey).filter(Boolean));
+  let matchedCases=0; allCases.forEach(k=>{if(master.has(k)) matchedCases++;});
+  const undated=cohort.filter(e=>!e.dateKey).length;
+  return {sentOrders:cohort.length,affectedOrders:finalRows.length,amount,typeData,serviceRows,finalRows,
+    allServiceCases:allCases.size,matchedCases,undated};
+}
+
+function getServiceFiltered(){
+  return getServiceCohortMetrics().finalRows;
 }
 function populateServiceFilters(){
-  const ySel=document.getElementById("serviceYear"), mSel=document.getElementById("serviceMonth");
-  if(!ySel||!mSel) return;
-  const years=[...new Set(STATE.service.map(r=>serviceDateParts(r.fecha).year).filter(Boolean))].sort((a,b)=>b.localeCompare(a));
+  const ySel=document.getElementById("serviceYear"), mSel=document.getElementById("serviceMonth"), cSel=document.getElementById("serviceCarrier");
+  if(!ySel||!mSel||!cSel) return;
+  const years=[...new Set([...buildMasterOrderCohorts().values()].map(r=>serviceDateParts(r.dateKey).year).filter(Boolean))].sort((a,b)=>b.localeCompare(a));
   ySel.innerHTML='<option value="all">Todos los años</option>'+years.map(y=>`<option value="${y}">${y}</option>`).join("");
   mSel.innerHTML='<option value="all">Todos los meses</option>'+MONTH_NAMES.map((n,i)=>`<option value="${String(i+1).padStart(2,"0")}">${n}</option>`).join("");
-  const refresh=()=>{SERVICE_YEAR=ySel.value; SERVICE_MONTH=mSel.value; DASH_CATEGORY=null; renderDashboardGeneral(DASH_MONTH);};
-  ySel.addEventListener("change",refresh); mSel.addEventListener("change",refresh);
+  const refresh=()=>{SERVICE_YEAR=ySel.value; SERVICE_MONTH=mSel.value; SERVICE_CARRIER=cSel.value; DASH_CATEGORY=null; renderDashboardGeneral(DASH_MONTH);};
+  ySel.addEventListener("change",refresh); mSel.addEventListener("change",refresh); cSel.addEventListener("change",refresh);
 }
 
 function computeMonthMetrics(monthFilter){
@@ -1436,10 +1530,11 @@ function computeMonthMetrics(monthFilter){
   const t1f = monthFilter==="all" ? STATE.t1 : STATE.t1.filter(r=>inMonth(r.fecha));
   const basef = monthFilter==="all" ? STATE.base : STATE.base.filter(r=>inMonth(r.fechaCompra));
   const hclf = monthFilter==="all" ? STATE.hcl : STATE.hcl.filter(r=>inMonth(r.fechaRecibe));
-  const servicef = getServiceFiltered();
+  const refundMetrics = getServiceCohortMetrics();
+  const servicef = refundMetrics.serviceRows;
   const importeTotal = basef.reduce((s,r)=> s + (r.importe||0), 0);
   const montoRefund = servicef.reduce((s,r)=> s + (r.monto||0), 0);
-  return {t1f, basef, hclf, servicef, importeTotal, montoRefund};
+  return {t1f, basef, hclf, servicef, importeTotal, montoRefund, refundMetrics};
 }
 
 function deltaBadge(curVal, prevVal){
@@ -1487,7 +1582,7 @@ function renderDashDetail(){
     srcLabel="HCL"; title = `Estatus: ${value}`;
   } else if(source==="service"){
     rows = getServiceFiltered().filter(r=> (r.tipo||"Sin tipo")===value);
-    cols = ["Orden","Tipo","Monto","Motivo","Fecha"];
+    cols = ["Orden original","Orden SERVICE","Nueva orden","Tipo","Monto","Motivo","Fecha"];
     srcLabel="SERVICE"; title = `Tipo: ${value}`;
   }
   const dateOf=(r)=> r.fechaCompra||r.fechaRecibe||r.fecha||"";
@@ -1505,7 +1600,7 @@ function renderDashDetail(){
   tbody.innerHTML = shown.map(r=>{
     if(source==="base") return `<tr><td class="mono">${esc(r.orden)}</td><td>${esc(r.etapa||"—")}</td><td>${fmtMXN(r.importe)}</td><td>${esc(r.fechaCompra||"—")}</td></tr>`;
     if(source==="hcl") return `<tr><td class="mono">${esc(r.orden)}</td><td>${esc(r.estatus||"—")}</td><td>${esc(r.fechaRecibe||"—")}</td></tr>`;
-    return `<tr><td class="mono">${esc(r.orden)}</td><td>${esc(r.tipo||"—")}</td><td>${fmtMXN(r.monto)}</td><td>${esc(r.motivo||"—")}</td><td>${esc(r.fecha||"—")}</td></tr>`;
+    return `<tr><td class="mono">${esc(r.ordenOriginal||r.orden)}</td><td class="mono">${esc(r.orden)}</td><td class="mono">${esc(r.nuevaOrden||"—")}</td><td>${esc(r.tipo||"—")}</td><td>${fmtMXN(r.monto)}</td><td>${esc(r.motivo||"—")}</td><td>${esc(r.fecha||"—")}</td></tr>`;
   }).join("") || `<tr><td colspan="${cols.length}" style="text-align:center;color:var(--faint);padding:20px">Sin registros para este filtro.</td></tr>`;
 
   exportBtn.onclick = ()=> exportDashDetailCSV(shown, cols, source);
@@ -1519,7 +1614,7 @@ function exportDashDetailCSV(rows, cols, source){
     let vals;
     if(source==="base") vals=[r.orden, r.etapa, r.importe, r.fechaCompra];
     else if(source==="hcl") vals=[r.orden, r.estatus, r.fechaRecibe];
-    else vals=[r.orden, r.tipo, r.monto, r.motivo, r.fecha];
+    else vals=[r.ordenOriginal||r.orden, r.orden, r.nuevaOrden, r.tipo, r.monto, r.motivo, r.fecha];
     lines.push(vals.map(v=>{ v=String(v==null?"":v); return /[",\n]/.test(v) ? '"'+v.replace(/"/g,'""')+'"' : v; }).join(","));
   });
   const blob=new Blob(["﻿"+lines.join("\r\n")], {type:"text/csv;charset=utf-8"});
@@ -1638,8 +1733,8 @@ function renderDashboardGeneral(monthFilter){
       delta:deltaBadge(Math.round(cur.importeTotal), prevMetrics?Math.round(prevMetrics.importeTotal):null)},
     {lab:"Órdenes en HCL", val:fmt(cur.hclf.length), foot:"hoja HCL del Master",
       delta:deltaBadge(cur.hclf.length, prevMetrics?prevMetrics.hclf.length:null)},
-    {lab:"Reembolsos SERVICE", val:fmt(cur.servicef.length), foot:fmtMXN(cur.montoRefund)+" reembolsado",
-      delta:deltaBadge(cur.servicef.length, prevMetrics?prevMetrics.servicef.length:null)}
+    {lab:"Incidencia posventa", val:fmtPctExact(pctExact(cur.refundMetrics.affectedOrders,cur.refundMetrics.sentOrders)),
+      foot:`${fmt(cur.refundMetrics.affectedOrders)} de ${fmt(cur.refundMetrics.sentOrders)} órdenes enviadas`,delta:""}
   ];
   document.getElementById("dashKpis").innerHTML = kpis.map(k=>`
     <div class="kpi"><span class="bar"></span>
@@ -1692,12 +1787,17 @@ function renderDashboardGeneral(monthFilter){
   renderHBarChart("dashHcl", hclEntries, {fmtVal:fmt, color:"var(--ok)", showPct:true, source:"hcl", active:activeHcl});
   document.getElementById("dashHclTag").textContent = `${fmt(hclf.length)} órdenes`;
 
-  const tipoCounts=new Map();
-  servicef.forEach(r=>{ const k=r.tipo||"Sin tipo"; tipoCounts.set(k,(tipoCounts.get(k)||0)+1); });
-  const tipoEntries=[...tipoCounts.entries()].sort((a,b)=>b[1]-a[1]);
-  renderServicePie("dashServicePie", tipoEntries, activeService);
-  renderServiceCards("dashServiceCards", tipoEntries, activeService);
-  document.getElementById("dashServiceTag").textContent = `${fmtMXN(montoRefund)}`;
+  const refund=cur.refundMetrics;
+  renderServiceKpis("dashServiceKpis",refund);
+  renderServiceRateChart("dashServiceRateChart",refund.typeData,refund.sentOrders,activeService);
+  renderServiceCards("dashServiceCards",refund.typeData,refund.sentOrders,refund.affectedOrders,activeService);
+  document.getElementById("dashServiceTag").textContent = `${fmtPctExact(pctExact(refund.affectedOrders,refund.sentOrders))} incidencia`;
+  const coverage=refund.allServiceCases ? refund.matchedCases/refund.allServiceCases*100 : 0;
+  const periodLabel=SERVICE_YEAR==="all"&&SERVICE_MONTH==="all" ? "histórico completo" :
+    `${SERVICE_MONTH==="all"?"todo el año":MONTH_NAMES[parseInt(SERVICE_MONTH,10)-1]} ${SERVICE_YEAR==="all"?"":SERVICE_YEAR}`.trim();
+  const carrierLabel=SERVICE_CARRIER==="all"?"todas las paqueterías":SERVICE_CARRIER;
+  document.getElementById("dashServiceMethod").textContent =
+    `Cálculo por cohorte de envío (${periodLabel} · ${carrierLabel}). Denominador: órdenes únicas con guía en Master. Numerador: órdenes originales únicas de SERVICE vinculadas al Master; si una orden tiene varios movimientos, su resolución es la más reciente. Cobertura del cruce SERVICE↔Master: ${fmt(refund.matchedCases)} de ${fmt(refund.allServiceCases)} órdenes (${fmtPctExact(coverage)}).${refund.undated?` ${fmt(refund.undated)} órdenes sin fecha se incluyen sólo en el histórico completo.`:""}`;
 
   const conCorreo = STATE.basedm.filter(r=>r.correo).length;
   document.getElementById("dashCorreoStat").textContent =
